@@ -43,6 +43,9 @@ def move(my_history, their_history, my_score, their_score):
         if x<bCount:
             return 'b'
         else:
+            y = randint(1,100)
+            if (y<3):
+                return 'b'
             return 'c'
         
 

@@ -1,3 +1,4 @@
+from random import *
 ####
 # Each team's file must define four tokens:
 #     team_name: a string
@@ -6,9 +7,9 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'Radaszkiewicz' # Only 10 chars displayed.
+strategy_name = 'MontoCarlo'
+strategy_description = 'This method will c for the first 10 moves.  Then it will respond the best to what I did last time?'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -28,6 +29,22 @@ def move(my_history, their_history, my_score, their_score):
     
     if len(my_history)<10:
         return 'c'
+    else:
+        my_LastMove = my_history[-1]
+        bCount=0
+        cCount=0
+        for i in range(len(my_history)):
+            if my_history[i-1]==my_LastMove:
+                if their_history[i]=='b':
+                    bCount+=1
+                else:
+                    cCount+=1
+        x = randint(1,bCount+cCount)
+        if x<bCount:
+            return 'b'
+        else:
+            return 'c'
+        
 
     
 def test_move(my_history, their_history, my_score, their_score, result):

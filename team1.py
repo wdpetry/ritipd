@@ -6,9 +6,9 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'unknown' # Only 10 chars displayed.
+strategy_name = 'I like colluders'
+strategy_description = 'Based on you'
     
 #def move(my_history, their_history, my_score, their_score):
 #    ''' Arguments accepted: my_history, their_history are strings.
@@ -31,25 +31,28 @@ strategy_description = 'How does this strategy decide?'
 
 def move(my_history, their_history, my_score, their_score):
     redeem=0#create a redeem value 
-    
-    for i in range(0,len(my_history)-1): 
-        if (my_history[-i] == 'c'):     
-            redeem +=1   #based on the number of times they've colluded with me.
-            
     if len(my_history)==0: # It's the first round; collude.
         return 'c'
-        
-    elif my_history[-1]=='c' and their_history[-1]=='b':
-        return 'b' # Betray if severely punished last time
-        
-    elif their_history[-2]=='c' or their_history[-3]=='c':
-        return 'c' # collude if they've colluded recently
-        
-    elif ( (redeem / len(my_history) )*100>30 ): 
-        return 'c'# collude if they've colluded more than 30% of the time
-
     else:
-        return 'b' # otherwise betray
+        for i in range(0,len(my_history)-1): 
+            if (my_history[-1 * i] == 'c'):     
+                redeem +=1   #based on the number of times they've colluded with me.
+            
+    
+        
+        if my_history[-1]=='c' and their_history[-1]=='b':
+            return 'b' # Betray if severely punished last time
+        if len(my_history)>=3:    
+            if their_history[-2]=='c' or their_history[-3]=='c':
+                return 'c' # collude if they've colluded recently
+        
+            elif ( (redeem / len(my_history) )*100>10 ): 
+                return 'c'# collude if they've colluded more than 10% of the time
+
+        if my_history[-1]=='c' and their_history[-1]=='c':
+            return 'c' # if we both colluded last time, collude again
+        else:
+            return 'b' # otherwise betray
 
 
 

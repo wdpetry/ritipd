@@ -6,9 +6,9 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'kar' # Only 10 chars displayed.
+strategy_name = 'pairs'
+strategy_description = 'looks for last time there was a pair like the last two'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -25,9 +25,24 @@ def move(my_history, their_history, my_score, their_score):
     
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
-    
-    return 'c'
-
+    if (len(my_history)<=2): # Collude on first two rounds
+        return 'c'
+    elif (their_history[-1]=='b'):
+        return 'b'
+    else:
+        
+        for play in range(len(their_history)-3,1,-1):
+            sub_me=my_history[play:play+1]
+            sub_them=their_history[play:play+1]
+            
+            if (sub_them==sub_me):
+                return their_history[play+2]
+        
+        # No match found
+        if my_history[-1]=='c' and their_history[-1]=='b':
+            return 'b' # Betray if they were severely punished last time
+        else:
+            return 'c' # Otherwise collude.
     
 def test_move(my_history, their_history, my_score, their_score, result):
     '''calls move(my_history, their_history, my_score, their_score)

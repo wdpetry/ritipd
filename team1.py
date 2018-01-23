@@ -6,9 +6,9 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+team_name = 'unknown' # Only 10 chars displayed.
+strategy_name = 'I like colluders'
+strategy_description = 'Based on you'
     
 #def move(my_history, their_history, my_score, their_score):
 #    ''' Arguments accepted: my_history, their_history are strings.
@@ -46,11 +46,11 @@ def move(my_history, their_history, my_score, their_score):
             if their_history[-2]=='c' or their_history[-3]=='c':
                 return 'c' # collude if they've colluded recently
         
-            elif ( (redeem / len(my_history) )*100>30 ): 
-                return 'c'# collude if they've colluded more than 30% of the time
+            elif ( (redeem / len(my_history) )*100>10 ): 
+                return 'c'# collude if they've colluded more than 10% of the time
 
         if my_history[-1]=='c' and their_history[-1]=='c':
-            return 'b' # if we both colluded last time, collude again
+            return 'c' # if we both colluded last time, collude again
         else:
             return 'b' # otherwise betray
 
